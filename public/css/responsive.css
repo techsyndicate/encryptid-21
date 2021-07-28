@@ -1,0 +1,381 @@
+@media screen and (max-width: 768px) {
+  nav {
+    height: 11vw;
+  }
+
+  nav ul {
+    height: 4vw;
+    margin-right: 8vw;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin-left: -5vw;
+  }
+
+  nav ul a {
+    color: white;
+    font-size: 3vw;
+    position: relative;
+  }
+
+  .logo {
+    height: 8vw;
+    width: 8vw;
+    margin: 2.5vw 0vw 0vw 6vw;
+  }
+
+  .btn {
+    font-size: 3vw;
+    padding: 0.7vw 2.5vw;
+  }
+
+  .lb-nav {
+    margin-right: 1vw;
+  }
+
+  .pfp {
+    width: 6vw;
+    height: 6vw;
+  }
+
+  .hover {
+    margin-right: 4vw;
+  }
+
+  .dropdown {
+    background-color: rgb(22, 22, 22);
+    padding: 2vh 2vw;
+    padding-top: 1vh;
+    border-radius: 4px;
+    transition: all 0.1s ease-out;
+    transform: scale(0);
+  }
+
+  .profile-nav {
+    font-size: 3vw;
+  }
+
+  #jai-3d {
+    height: 100vh;
+  }
+
+  #jai-3d img {
+    width: 90vw;
+    margin-top: -5vw;
+  }
+
+  .main-heading {
+    margin-top: 3vw;
+    font-size: 10vw;
+  }
+
+  #jai-3d p {
+    font-size: 5vw;
+  }
+
+  #clockdiv {
+    font-size: 5vw;
+    margin-bottom: 6vw;
+  }
+
+  #clockdiv div > span {
+    padding: 2vw;
+  }
+
+  .smalltext {
+    padding-top: 1vw;
+    font-size: 3vw;
+    text-align: center;
+  }
+
+  #jai-3d button {
+    font-size: 3.5vw;
+    margin-right: 2vw;
+    width: fit-content;
+    height: 7vw;
+    padding-right: 2vw;
+    padding-left: 2vw;
+  }
+
+  .rules-head {
+    margin-top: -5vh;
+    font-size: 8vw;
+    font-weight: bold;
+  }
+
+  .rules {
+    font-size: 3.8vw;
+    width: 70vw;
+    margin-left: -5vw;
+  }
+
+  footer {
+    background-color: #111;
+    position: relative;
+    padding: 0.1vw 0vw;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-top: 14vh;
+    text-align: center;
+    color: rgba(102, 102, 102, 0.904);
+    font-weight: 500;
+    font-size: 4vw;
+  }
+
+  .leaderboard-container {
+    padding: 4vw 7vw;
+    margin: 0;
+  }
+
+  .profile-heading {
+    font-size: 8vw;
+  }
+
+  .searchbar {
+    width: fit-content;
+  }
+
+  .searchbar svg {
+    height: 2.5vw;
+    width: 2vw;
+  }
+
+  .searchbar input {
+    font-size: 3vw;
+    padding-left: 1vw;
+    width: 30vw;
+  }
+
+  table {
+    width: 85vw;
+    font-size: 4vw;
+  }
+
+  .profile-container {
+    padding: 7vw 7vw;
+    margin: 0;
+  }
+
+  .profile-container p {
+    font-size: 3vw;
+  }
+
+  .profile-small-heading {
+    font-size: 4vw;
+  }
+
+  .profile-information {
+    width: 80vw;
+  }
+
+  .labels {
+    font-size: 4vw;
+  }
+
+  .values {
+    font-size: 3vw;
+  }
+
+  .form-row-1 {
+    width: 90vw;
+  }
+
+  .profile-completion input {
+    font-size: 2.5vw;
+    width: 35vw;
+    padding-left: 3vw;
+  }
+
+  .btn {
+    padding: 0.8vh 3vw;
+  }
+
+  .profile-transaction-container {
+    padding: 4vw 4vw;
+    margin: 0;
+  }
+
+  .transaction-information {
+    padding: 1vw 1vw 2vw 4vw;
+    width: 87vw;
+  }
+
+  .description {
+    width: 93vw;
+  }
+
+  .dashboard-container {
+    padding: 4vw 4vw;
+    margin: 0;
+    margin-top: 3vw;
+  }
+
+  .levels {
+    width: unset;
+  }
+
+  .level {
+    padding: 2.5vw;
+    padding-bottom: 2.5vw;
+    margin-right: 0vw;
+    flex-basis: 100%;
+    width: -webkit-fill-available;
+  }
+
+  .level-header {
+    width: 85vw;
+  }
+
+  .level-symbol {
+    font-size: 6vw;
+  }
+
+  .level-name {
+    font-size: 7vw;
+  }
+
+  .level-players i {
+    font-size: 6vw;
+  }
+
+  .level-players span {
+    font-size: 6vw;
+    margin-left: 1.2vw;
+  }
+
+  .level-graph img {
+    height: 25vw;
+    width: 100%;
+  }
+
+  .level-info {
+    width: 90vw;
+  }
+
+  .level-info h3 {
+    font-size: 6vw;
+  }
+
+  .level-details {
+    justify-content: space-around;
+    margin-top: -3vw;
+  }
+
+  .level-details-column {
+    margin-right: unset;
+  }
+
+  .level-info-div {
+    margin-top: 3vw;
+  }
+
+  .level-info-label {
+    font-size: 4.3vw;
+  }
+
+  .roi {
+    padding-left: 5vw;
+  }
+
+  .dash-btn {
+    font-size: 4vw;
+    margin-top: 1vw;
+    margin-left: 6vw;
+    background-color: #00ae40;
+    color: white;
+    font-family: Inter, sans-serif;
+    padding: 0.8vh 3vw;
+    width: unset;
+    height: unset;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.2s ease-out;
+  }
+
+  .button i {
+    font-size: 2.9vw;
+  }
+
+  .play-wrapper {
+    display: block;
+    width: 90vw;
+    margin-top: 5vw;
+  }
+
+  .play-left {
+    width: 100%;
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .play-right {
+    width: 75vw;
+    border: 1px solid rgb(22, 225, 110);
+    padding: 5vw;
+    border-radius: 3px;
+    margin-left: 0vw;
+    margin-top: 7vw;
+  }
+
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .stat-header span {
+    font-size: 6vw;
+    font-weight: bold;
+  }
+
+  .stat-header i {
+    font-size: 4vw;
+    color: #16e16e;
+    margin-left: 70%;
+    margin-top: 0.4vw;
+  }
+
+  .stat {
+    margin-top: 3vw;
+    margin-right: 5vw;
+  }
+
+  .stat-label {
+    font-size: 3vw;
+    color: #16e16e;
+  }
+
+  .stat-value {
+    font-size: 3.5vw;
+    font-weight: bold;
+  }
+
+  .play-left input {
+    margin-top: 7vw;
+    padding: 1.2vh 3vw;
+    border: 1px solid white;
+    border-radius: 4px;
+    width: 60vw;
+    color: white;
+    font-family: "Inter", "sans-serif";
+    font-size: 3vw;
+    background-color: transparent;
+    margin-left: -5vw;
+  }
+
+  .play-left button {
+    border: 1px solid #00ae40;
+    background-color: #00ae40;
+    border-radius: 4px;
+    color: white;
+    font-size: 3vw;
+    font-family: "Inter", "sans-serif";
+    padding: 1.2vh 3vw;
+    transition: all 0.2s ease-out;
+  }
+
+  #question img {
+    width: 70vw;
+  }
+}

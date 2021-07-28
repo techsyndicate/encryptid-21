@@ -1,0 +1,207 @@
+<div class="load" id="loader">
+  <div class="one"></div>
+  <div class="two"></div>
+  <div class="three"></div>
+</div>
+<div class="leaderboard-container">
+  <div class="profile-heading">Levels</div>
+  <button
+    onclick="showAddForm()"
+    id="toggle-btn"
+    class="btn admin-btn"
+    style="margin-top: 3vh"
+  >
+    Add Level
+  </button>
+  <form id="addForm" style="display: none">
+    <div class="form-row-1">
+      <div class="input-box">
+        <label class="labels">Position</label>
+        <input
+          type="number"
+          id="levelPosition"
+          placeholder="1"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="input-box">
+        <label class="labels">Name</label>
+        <input
+          type="text"
+          id="levelName"
+          placeholder="Apple"
+          autocomplete="off"
+          required
+        />
+      </div>
+    </div>
+    <div class="form-row-1">
+      <div class="input-box">
+        <label class="labels">Symbol</label>
+        <input
+          type="text"
+          id="levelSymbol"
+          placeholder="AAPL"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="input-box">
+        <label class="labels">Question</label>
+        <input
+          type="text"
+          id="levelQuestion"
+          placeholder="coder of the new world?"
+          autocomplete="off"
+          required
+        />
+      </div>
+    </div>
+    <div class="form-row-1">
+      <div class="input-box">
+        <label class="labels">Answer</label>
+        <input
+          type="text"
+          id="levelAnswer"
+          placeholder="amshul"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="input-box">
+        <label class="labels">Source Code Hint</label>
+        <input
+          type="text"
+          id="levelSourceCodeHint"
+          placeholder="cotnw"
+          autocomplete="off"
+          required
+        />
+      </div>
+    </div>
+    <div class="form-row-1">
+      <div class="input-box">
+        <label class="labels">Return Rate</label>
+        <input
+          type="number"
+          id="levelReturnRate"
+          placeholder="10"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="input-box">
+        <label class="labels">Initial Value</label>
+        <input
+          type="number"
+          id="levelBasePoints"
+          placeholder="200"
+          autocomplete="off"
+          required
+        />
+      </div>
+    </div>
+    <button type="submit" class="btn admin-btn">Add</button>
+  </form>
+  <div id="levels">
+    <% if(levels.length == 0){ %>
+    <p style="margin-top: 2vw">No Levels Yet</p>
+    <% }else {%> <% for(level of levels){ %>
+    <div class="level-box">
+      <label class="labels">
+        <strong> Level <%- level.position %> </strong>
+      </label>
+      <div class="level-profile-information">
+        <div class="profile-box">
+          <label class="labels"> Name </label>
+          <div class="values"><%- level.name %></div>
+        </div>
+        <div class="profile-box">
+          <label class="labels"> Symbol </label>
+          <div class="values"><%- level.symbol %></div>
+        </div>
+        <div class="profile-box">
+          <label class="labels"> Question </label>
+          <div class="values"><%- level.question %></div>
+        </div>
+        <div class="profile-box">
+          <label class="labels"> Answer </label>
+          <div class="values"><%- level.answer %></div>
+        </div>
+        <div class="profile-box">
+          <label class="labels"> Source Code Hint </label>
+          <div class="values"><%- level.sourceCodeHint %></div>
+        </div>
+        <div class="profile-box">
+          <label class="labels"> Initial Value </label>
+          <div class="values"><%- level.initialValue %></div>
+        </div>
+        <div class="profile-box">
+          <label class="labels"> Current Value </label>
+          <div class="values"><%- level.currentValue %></div>
+        </div>
+        <div class="profile-box">
+          <label class="labels"> Return Rate </label>
+          <div class="values"><%- level.returnRate %></div>
+        </div>
+        <div class="profile-box">
+          <label class="labels"> Current No. of People </label>
+          <div class="values"><%- level.currentNumberOfPeople %></div>
+        </div>
+      </div>
+    </div>
+    <% } %> <% } %>
+  </div>
+</div>
+
+<script>
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+  });
+  const levels = document.getElementById("levels");
+  const button = document.getElementById("toggle-btn");
+  isToggled = false;
+  function showAddForm() {
+    if (isToggled) {
+      levels.style.display = "block";
+      document.getElementById("addForm").style.display = "none";
+      button.innerText = "Add Level";
+      isToggled = false;
+    } else {
+      levels.style.display = "none";
+      document.getElementById("addForm").style.display = "block";
+      button.innerText = "Levels";
+      isToggled = true;
+    }
+  }
+
+  document.getElementById("addForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const levelPosition = document.getElementById("levelPosition").value;
+    const levelName = document.getElementById("levelName").value;
+    const levelSymbol = document.getElementById("levelSymbol").value;
+    const levelQuestion = document.getElementById("levelQuestion").value;
+    const levelAnswer = document.getElementById("levelAnswer").value;
+    const levelBasePoints = document.getElementById("levelBasePoints").value;
+    const levelSourceCodeHint = document.getElementById(
+      "levelSourceCodeHint"
+    ).value;
+    const levelReturnRate = document.getElementById("levelReturnRate").value;
+
+    fetch(
+      `/admin/addLevel?lP=${levelPosition}&lQ=${levelQuestion}&lA=${levelAnswer}&lB=${levelBasePoints}&lS=${levelSourceCodeHint}&lR=${levelReturnRate}&lN=${levelName}&lSY=${levelSymbol}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.body);
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  });
+</script>

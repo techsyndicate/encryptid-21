@@ -1,0 +1,135 @@
+<div class="load" id="loader">
+  <div class="one"></div>
+  <div class="two"></div>
+  <div class="three"></div>
+</div>
+<div class="leaderboard-container">
+  <div class="profile-heading">Profile</div>
+  <div class="profile-info">
+    <div class="profile-small-heading">Photo</div>
+    <img
+      src="<%= info.pfpUrl %>"
+      class="pfp-big"
+      alt="pfp"
+      height="100"
+      width="100"
+    />
+    <div id="main" data-id="<%= info._id%>">
+      <% if (info.banned) { %>
+      <button id="btn" class="btn admin-btn" data-type="unban">Unban</button>
+      <% }else{ %>
+      <button id="btn" class="btn admin-btn" data-type="ban">Ban</button>
+      <% } %>
+      <a href="/admin/userlogs?id=<%- info._id %>">
+        <button class="btn admin-btn">Logs</button>
+      </a>
+    </div>
+    <div class="admin-profile-information">
+      <div class="admin-profile-box">
+        <label class="labels"> Username </label>
+        <div class="values"><%= info.username %>#<%= info.nameTag %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Full Name </label>
+        <div class="values"><%= info.fullName %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> School Name </label>
+        <div class="values"><%= info.schoolName %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Email </label>
+        <div class="values"><%= info.email %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Non-Competitive </label>
+        <div class="values"><%= info.nc %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Discord ID </label>
+        <div class="values"><%= info.userId %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Verified </label>
+        <div class="values"><%= info.verified %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Funds </label>
+        <div class="values">$<%= info.coins %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Levels Completed </label>
+        <div class="values"><%= info.levelsCompleted.length %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Current Level </label>
+        <div class="values"><%= info.currentLevelName %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Current Level Start Time </label>
+        <div class="values"><%= info.clst %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Last Level Solve Time </label>
+        <div class="values"><%= info.llst %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Last Log Time </label>
+        <div class="values"><%= info.llt %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> AFK </label>
+        <div class="values"><%= info.afk %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Banned </label>
+        <div class="values"><%= info.banned %></div>
+      </div>
+      <div class="admin-profile-box">
+        <label class="labels"> Allowed Negative Balance </label>
+        <div class="values"><%= info.allowedNegativeBalance %></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+  });
+  const div = document.getElementById("main");
+  const id = div.getAttribute("data-id");
+  const btn = document.getElementById("btn");
+  btn.addEventListener("click", () => {
+    if (btn.getAttribute("data-type") == "ban") {
+      ban(id);
+    } else {
+      unban(id);
+    }
+  });
+
+  function ban(id) {
+    fetch(`/admin/ban?id=${id}`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.body);
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function unban(id) {
+    fetch(`/admin/unban?id=${id}`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.body);
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  }
+</script>

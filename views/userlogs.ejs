@@ -1,0 +1,60 @@
+<div class="load" id="loader">
+  <div class="one"></div>
+  <div class="two"></div>
+  <div class="three"></div>
+</div>
+<div class="leaderboard-container">
+  <div class="profile-heading">User Logs</div>
+  <%if(logs.length == 0){ %>
+  <h1 style="text-align: center">No Logs Yet</h1>
+  <% }else {%>
+  <table>
+    <thead>
+      <tr>
+        <td>Level</td>
+        <td>Answer</td>
+        <td>Time</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(log of logs) { %>
+      <tr class="row">
+        <td><%= log.level %></td>
+        <td><%= log.answerEntered %></td>
+        <td><%= log.updatedTimestamp %></td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+<script>
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+  });
+
+  function search_rows() {
+    let input = document.getElementById("searchBar").value;
+    input = input.toLowerCase();
+    const rows = document.getElementsByClassName("row");
+    const footer = document.getElementById("footer");
+    if (input.length != 0) {
+      for (row of rows) {
+        if (row.children[1].innerText.toLowerCase().includes(input)) {
+          row.style.display = "table-row";
+          footer.style.position = "fixed";
+        } else {
+          row.style.display = "none";
+          footer.style.position = "fixed";
+        }
+      }
+    } else {
+      footer.style.position = "relative";
+      for (row of rows) {
+        row.style.display = "table-row";
+      }
+    }
+  }
+</script>

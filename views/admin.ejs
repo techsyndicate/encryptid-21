@@ -1,0 +1,22 @@
+<div class="load" id="loader">
+  <div class="one"></div>
+  <div class="two"></div>
+  <div class="three"></div>
+</div>
+<div class="leaderboard-container">
+  <div class="profile-heading">Admin Panel of <%= username %></div>
+  <div class="admin-cards-box">
+    <a href="/admin/users" class="btn admin-btn"> Users </a>
+    <a href="/admin/logs" class="btn admin-btn"> Logs </a>
+    <a href="/admin/levels" class="btn admin-btn"> Levels </a>
+  </div>
+</div>
+<script>
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+    const footer = document.getElementById("footer");
+    footer.style.position = "fixed";
+  });
+</script>

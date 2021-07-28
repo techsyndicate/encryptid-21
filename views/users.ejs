@@ -1,0 +1,77 @@
+<div class="load" id="loader">
+  <div class="one"></div>
+  <div class="two"></div>
+  <div class="three"></div>
+</div>
+<div class="leaderboard-container">
+  <div class="profile-heading">Users</div>
+  <div class="searchbar">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 21.078 21.084"
+      class="svelte-1p6zj2z"
+    >
+      <path
+        id="Icon_ionic-ios-search"
+        data-name="Icon ionic-ios-search"
+        d="M25.331,24.051l-5.862-5.917A8.354,8.354,0,1,0,18.2,19.418L24.025,25.3a.9.9,0,0,0,1.273.033A.908.908,0,0,0,25.331,24.051ZM12.9,19.489a6.6,6.6,0,1,1,4.666-1.932A6.556,6.556,0,0,1,12.9,19.489Z"
+        transform="translate(-4.5 -4.493)"
+        fill="#fff"
+      ></path>
+    </svg>
+    <input
+      type="text"
+      placeholder="Search"
+      id="searchBar"
+      onkeyup="search_rows()"
+    />
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <td>#</td>
+        <td>Username</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var i=0; i < allUsers.length; i++) { %>
+      <tr
+        class="row clickable"
+        onclick='window.location.href = "/admin/userinfo?id=<%= allUsers[i]._id%>" '
+      >
+        <td><%= i+1%></td>
+        <td><%= allUsers[i].username %>#<%= allUsers[i].nameTag %></td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+<script>
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+  });
+  function search_rows() {
+    let input = document.getElementById("searchBar").value;
+    input = input.toLowerCase();
+    const rows = document.getElementsByClassName("row");
+    const footer = document.getElementById("footer");
+    if (input.length != 0) {
+      for (row of rows) {
+        if (row.children[1].innerText.toLowerCase().includes(input)) {
+          row.style.display = "table-row";
+          footer.style.position = "fixed";
+        } else {
+          row.style.display = "none";
+          footer.style.position = "fixed";
+        }
+      }
+    } else {
+      footer.style.position = "relative";
+      for (row of rows) {
+        row.style.display = "table-row";
+      }
+    }
+  }
+</script>

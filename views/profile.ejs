@@ -1,0 +1,193 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+/>
+<div class="load" id="loader">
+  <div class="one"></div>
+  <div class="two"></div>
+  <div class="three"></div>
+</div>
+<div class="profile-container">
+  <div class="profile-heading">Profile</div>
+  <p>This information is only visible to you.</p>
+  <div class="profile-info">
+    <div class="profile-small-heading">Photo</div>
+    <img
+      src="<%= user.pfpUrl %>"
+      class="pfp-big"
+      alt="pfp"
+      height="100"
+      width="100"
+    />
+    <div class="profile-information">
+      <div class="profile-box">
+        <label class="labels"> Username </label>
+        <div class="values"><%= user.username %>#<%= user.nameTag %></div>
+      </div>
+      <div class="profile-box">
+        <label class="labels"> Email </label>
+        <div class="values"><%= user.email %></div>
+      </div>
+      <div class="profile-box">
+        <label class="labels"> Funds </label>
+        <div class="values">$<%= user.coins %></div>
+      </div>
+      <div class="profile-box">
+        <label class="labels"> Levels Completed </label>
+        <div class="values"><%= user.levelsCompleted.length %></div>
+      </div>
+    </div>
+    <% if (profileCompletion) { %>
+    <div class="profile-completion">
+      <div class="profile-heading">Complete Your Profile</div>
+      <p>
+        Please fill in these fields to complete your registration. You won't be
+        able to play if your profile isn't complete.
+      </p>
+      <form id="completion-form">
+        <div class="form-row-1">
+          <div class="input-box">
+            <label class="labels">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              autocomplete="off"
+              placeholder="John Doe"
+            />
+          </div>
+          <div class="input-box">
+            <label class="labels">School Name</label>
+            <input
+              type="text"
+              id="schoolName"
+              autocomplete="off"
+              placeholder="AIS Sector-46"
+            />
+          </div>
+        </div>
+        <button type="submit" class="btn" id="completion-submit-button">
+          Submit
+        </button>
+      </form>
+    </div>
+    <% } else { %>
+    <div class="profile-information">
+      <div class="profile-box">
+        <label class="labels"> Full Name </label>
+        <div class="values"><%= user.fullName %></div>
+      </div>
+      <div class="profile-box">
+        <label class="labels"> School Name </label>
+        <div class="values"><%= user.schoolName %></div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>
+
+<% if (transactions.length !== 0) { %>
+<div class="profile-transaction-container">
+  <div class="profile-transaction">
+    <div class="profile-heading">Transaction History</div>
+  </div>
+  <% for(var i=0; i < transactions.length; i++) { %>
+  <div class="profile-information transaction-information">
+    <div class="profile-box">
+      <label class="labels"> Level </label>
+      <div class="values"><%= transactions[i].levelName %></div>
+    </div>
+    <% if (transactions[i].type === "Return") { %>
+    <div class="profile-box">
+      <label class="labels"> Amount Added </label>
+      <div class="values"><%= transactions[i].amount %></div>
+    </div>
+    <div class="profile-box">
+      <label class="labels"> Profit/Loss </label>
+      <div class="values"><%= transactions[i].net %></div>
+    </div>
+    <% } else { %>
+    <div class="profile-box">
+      <label class="labels"> Amount Deducted </label>
+      <div class="values"><%= transactions[i].amount %></div>
+    </div>
+    <% } %>
+    <div class="profile-box">
+      <label class="labels"> Transaction Type </label>
+      <div class="values"><%= transactions[i].type %></div>
+    </div>
+    <div class="profile-box">
+      <label class="labels"> Description </label>
+      <div class="values" style="width: 80%">
+        <% if (transactions[i].type === "Return") { %> $<%=
+        transactions[i].amount %> got in return after solving <%=
+        transactions[i].levelName %> which was bought at $<%=
+        transactions[i].misc %>. Net is <%= transactions[i].net %>. <% } else {
+        %> <%= transactions[i].levelName %> bought for $<%=
+        transactions[i].amount %> <% } %>
+      </div>
+    </div>
+    <div class="profile-box">
+      <label class="labels"> Transaction Time </label>
+      <div class="values"><%= transactions[i].updatedTimestamp %></div>
+    </div>
+  </div>
+  <% } %>
+</div>
+<% } %>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script>
+  const notyf = new Notyf({
+    duration: 1500,
+    position: { x: "left", y: "bottom" },
+  });
+
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+  });
+
+  window.addEventListener("submit", (e) => {
+    if (e.target.id === "completion-form") {
+      e.preventDefault();
+      const schoolName = document.getElementById("schoolName").value;
+      const fullName = document.getElementById("fullName").value;
+      const submitButton = document.getElementById("completion-submit-button");
+      if (schoolName.trim().length === 0 || fullName.trim().length === 0) {
+        notyf.error("Please fill all the fields.");
+      } else {
+        schoolName.disabled = true;
+        fullName.disabled = true;
+        submitButton.disabled = true;
+        fetch("/profile/verify", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ schoolName, fullName }),
+        })
+          .then(async (response) => {
+            const resp = await response.json();
+            if (resp.success) {
+              notyf.success("Registration successful!");
+              setTimeout(() => {
+                window.location.href = "/dashboard";
+              }, 1500);
+            } else {
+              notyf.error("Something went wrong. Please try again.");
+              schoolName.disabled = false;
+              fullName.disabled = false;
+              submitButton.disabled = false;
+            }
+          })
+          .catch((error) => {
+            notyf.error("Something went wrong. Please try again.");
+            schoolName.disabled = false;
+            fullName.disabled = false;
+            submitButton.disabled = false;
+          });
+      }
+    }
+  });
+</script>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/05c3a0ba9e.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="shortcut icon" href="/assets/ts_logo.png" />
+    <title>Encryptid '21</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/"><div class="logo"></div></a>
+      <ul>
+        <% if (auth === true) { %> <% if(admin === false){ %>
+        <li class="hover"><a href="/play" class="nav-link">Play</a></li>
+        <% } %>
+        <li class="hover">
+          <a href="/dashboard" class="nav-link">Dashboard</a>
+        </li>
+        <li class="hover">
+          <a href="/leaderboard" class="nav-link">Leaderboard</a>
+        </li>
+        <% if (admin === true) { %>
+        <li class="hover"><a href="/admin" class="nav-link">Admin</a></li>
+        <li class="hover"><a href="/logout" class="nav-link">Logout</a></li>
+        <% } else { %>
+        <li class="hover"><a href="/logout" class="nav-link">Logout</a></li>
+        <% } %>
+        <li id="profile">
+          <div class="profile">
+            <a href="/profile">
+              <div
+                class="pfp"
+                style="background-image: url('<%= pfp %>')"
+              ></div>
+            </a>
+          </div>
+        </li>
+        <% } else { %>
+        <li class="hover">
+          <a href="/leaderboard" class="nav-link lb-nav">Leaderboard</a>
+        </li>
+        <li><a href="/auth/discord" class="btn">Login</a></li>
+        <% } %>
+      </ul>
+    </nav>
+    <hr id="hrule" />
+    <%- body %>
+    <footer id="footer">
+      <p>Tech Syndicate</p>
+    </footer>
+    <script>
+      const path = window.location.href.split("/")[3];
+      const elements = document.getElementsByTagName("a");
+      for (let i = 0; i < elements.length; i++) {
+        if (elements[i].href.split("/")[3] === path) {
+          elements[i].id = "active";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,171 @@
+<div class="load" id="loader">
+  <div class="one"></div>
+  <div class="two"></div>
+  <div class="three"></div>
+</div>
+<div class="leaderboard-container dashboard-container">
+  <div class="profile-heading">Dashboard</div>
+  <div class="description">
+    <p>
+      Welcome <span style="color: #16e16e"><%= username %></span>! Choose a
+      level based on its ROI rate and value. Visit your
+      <a href="/profile">profile</a> to know your current balance and
+      transaction history. Check out the
+      <a href="/leaderboard">leaderboard</a> to know where you stand.
+    </p>
+  </div>
+  <div class="levels">
+    <% for (var i = 0; i < levels.length; i++) { %> <% if(levels[i].status ==
+    'Completed'){ %>
+    <div class="level completed">
+      <div class="level-header">
+        <div class="level-heading">
+          <span class="level-symbol"><%= levels[i].symbol %></span><br />
+          <span class="level-name"><%= levels[i].name %></span>
+        </div>
+        <div class="level-players">
+          <i class="fa fa-users" aria-hidden="true"></i
+          ><span><%= levels[i].currentNumberOfPeople %></span>
+        </div>
+      </div>
+      <div class="level-graph">
+        <img id="<%= levels[i].position %>" src="<%= levels[i].graph %>" />
+      </div>
+      <div class="level-info">
+        <h3>Details</h3>
+        <div class="level-details">
+          <div class="level-info-div">
+            <span class="level-info-label">Status</span><br />
+            <span class="level-info-value"><%= levels[i].status %></span>
+          </div>
+          <div class="level-info-div">
+            <span class="level-info-label">Current Value</span><br />
+            <span class="level-info-value">$<%= levels[i].currentValue %></span>
+          </div>
+          <div class="level-info-div">
+            <div class="roi">
+              <span class="level-info-label">ROI Rate</span><br />
+              <span class="level-info-value"><%= levels[i].returnRate %>%</span>
+            </div>
+          </div>
+          <div class="level-info-div">
+            <span class="level-info-label">Current ROI</span><br />
+            <span class="level-info-value">$<%= levels[i].currROI %></span>
+          </div>
+          <div class="level-info-div">
+            <span class="level-info-label">Value Change</span><br />
+            <span class="level-info-value"><%= levels[i].valueChange %>%</span>
+          </div>
+          <div class="level-info-div">
+            <div class="button">
+              <% if (levels[i].disabled === true) { %>
+              <button id="disabled" class="dash-btn">
+                <%= levels[i].buttonText %> <i class="fas fa-chevron-right"></i>
+              </button>
+              <% } else { %>
+              <form action="/play" method="POST">
+                <input
+                  type="hidden"
+                  name="level"
+                  value="<%= levels[i].position %>"
+                />
+                <button type="submit" class="dash-btn">
+                  <%= levels[i].buttonText %>
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </form>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }else{ %>
+    <div class="level">
+      <div class="level-header">
+        <div class="level-heading">
+          <span class="level-symbol"><%= levels[i].symbol %></span><br />
+          <span class="level-name"><%= levels[i].name %></span>
+        </div>
+        <div class="level-players">
+          <i class="fa fa-users" aria-hidden="true"></i
+          ><span><%= levels[i].currentNumberOfPeople %></span>
+        </div>
+      </div>
+      <div class="level-graph">
+        <img id="<%= levels[i].position %>" src="<%= levels[i].graph %>" />
+      </div>
+      <div class="level-info">
+        <h3>Details</h3>
+        <div class="level-details">
+          <div class="level-info-div">
+            <span class="level-info-label">Status</span><br />
+            <span class="level-info-value"><%= levels[i].status %></span>
+          </div>
+          <div class="level-info-div">
+            <span class="level-info-label">Current Value</span><br />
+            <span class="level-info-value">$<%= levels[i].currentValue %></span>
+          </div>
+          <div class="level-info-div">
+            <div class="roi">
+              <span class="level-info-label">ROI Rate</span><br />
+              <span class="level-info-value"><%= levels[i].returnRate %>%</span>
+            </div>
+          </div>
+          <div class="level-info-div">
+            <span class="level-info-label">Current ROI</span><br />
+            <span class="level-info-value">$<%= levels[i].currROI %></span>
+          </div>
+          <div class="level-info-div">
+            <span class="level-info-label">Value Change</span><br />
+            <span class="level-info-value"><%= levels[i].valueChange %>%</span>
+          </div>
+          <div class="level-info-div">
+            <div class="button">
+              <% if (levels[i].disabled === true) { %>
+              <button id="disabled" class="dash-btn">
+                <%= levels[i].buttonText %> <i class="fas fa-chevron-right"></i>
+              </button>
+              <% } else { %>
+              <form action="/play" method="POST">
+                <input
+                  type="hidden"
+                  name="level"
+                  value="<%= levels[i].position %>"
+                />
+                <button type="submit" class="dash-btn">
+                  <%= levels[i].buttonText %>
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </form>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %> <% } %>
+  </div>
+</div>
+<script>
+  window.addEventListener("load", () => {
+    fetch("/graphs", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then(async (response) => {
+        const resp = await response.json();
+        const loader = document.getElementById("loader");
+        loader.style.opacity = "0";
+        loader.style.visibility = "hidden";
+        Object.keys(resp).forEach((k) => {
+          document.getElementById(k).src = resp[k];
+          console.log("graphs updated");
+        });
+      })
+      .catch((err) => console.log(err));
+  });
+</script>
